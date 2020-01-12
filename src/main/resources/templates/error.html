@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<p>Error status code is:
+<th th:text="${status}"></th>
+</p>
+<p>Exception is:
+<th th:text="${error}"></th>
+</p>
+<p>Message is :
+<th th:text="${message}"></th>
+</p>
+<a href="index.html" th:href="@{/}">На главную</a>
+<a href="#" onclick="history.back();">Назад</a>
+</body>
+</html>

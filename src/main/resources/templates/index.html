@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>VotingApp</title>
+</head>
+<body>
+Hello!
+<br>
+<p>
+    You logged as: <span sec:authentication="name"></span>
+</p>
+<br>
+<a href="login.html" th:href="login">Войти</a>
+<a href="registration.html" th:href="registration">Зарегестрироваться</a>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<br>
+<div sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')">
+    <a href="votes.html" th:href="@{ajax/votes}">голосование</a>
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <a href="users.html" th:href="@{ajax/users}">список пользователей</a>
+    <br>
+    <a href="dishes.html" th:href="@{ajax/dishes}">dishes</a>
+    <br>
+    <a href="lunches.html" th:href="@{ajax/lunches}">lunches</a>
+    <br>
+    <a href="restaurants.html" th:href="@{ajax/restaurants}">restaurants</a>
+</div>
+</body>
+</html>
