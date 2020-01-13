@@ -73,6 +73,7 @@ class VoteControllerTest extends AbstractControllerTest {
         VOTE_TO_MATCHERS.assertMatch(VoteUtil.getTOs(List.of(VOTE2, VOTE4, VOTE5)), readListFromJson(resultActions, VoteTO.class));
     }
 
+    //This test required to change system time
     @Test
     @WithMockUser(authorities = "ROLE_USER", username = "user")
     void addAgain() throws Exception {
