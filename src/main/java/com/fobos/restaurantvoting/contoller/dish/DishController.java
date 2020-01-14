@@ -30,7 +30,11 @@ public class DishController {
     public void addOrUpdate(@Valid Dish dish) {
         BigDecimal price = dish.getPrice();
         dish.setPrice(price.setScale(2, RoundingMode.HALF_UP));
-        dishRepo.save(dish);
+        if (dish.getId() != null){
+            dishRepo.update(dish.getName(), dish.getPrice(), dish.getId());
+        } else {
+            dishRepo.save(dish);
+        }
     }
 
     @GetMapping("/{id}")

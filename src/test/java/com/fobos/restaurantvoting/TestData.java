@@ -18,9 +18,9 @@ public class TestData {
     public static final Dish DISH5 = new Dish(5L, "vodka", new BigDecimal(404).setScale(2, RoundingMode.HALF_UP), null);
 
 
-    public static final Lunch LUNCH1 = new Lunch("FISH WITH BEER", 1L, LocalDate.of(2019, 12, 30), null, List.of(DISH2, DISH1));
-    public static final Lunch LUNCH2 = new Lunch("PIZZA WITH MEAT", 2L, LocalDate.of(2019, 12, 30), null, List.of(DISH4, DISH3));
-    public static final Lunch LUNCH3 = new Lunch("pizza", 3L, LocalDate.now(), null, List.of(DISH3));
+    public static final Lunch LUNCH1 = new Lunch("FISH WITH BEER", 1L, LocalDate.of(2019, 12, 30), null, Set.of(DISH2, DISH1));
+    public static final Lunch LUNCH2 = new Lunch("PIZZA WITH MEAT", 2L, LocalDate.of(2019, 12, 30), null, Set.of(DISH4, DISH3));
+    public static final Lunch LUNCH3 = new Lunch("pizza", 3L, LocalDate.now(), null, Set.of(DISH3));
 
     public static final Restaurant RESTAURANT1 = new Restaurant("Primary restaurant", 1L, "Lenina, 3", null, null);
     public static final Restaurant UPDATED_RESTAURANT = new Restaurant("third", 1L, "third", null, null);
@@ -44,9 +44,8 @@ public class TestData {
 
 
     public static TestMatchers<Dish> DISH_MATCHERS = TestMatchers.useFieldsComparator(Dish.class, "lunches");
-    public static TestMatchers<Lunch> LUNCH_MATCHERS = TestMatchers.useFieldsComparator(Lunch.class, "dishes");
+    public static TestMatchers<Lunch> LUNCH_MATCHERS = TestMatchers.useFieldsComparator(Lunch.class);
     public static TestMatchers<Restaurant> RESTAURANT_MATCHERS = TestMatchers.useFieldsComparator(Restaurant.class, "lunches", "votes");
     public static TestMatchers<User> USER_MATCHERS = TestMatchers.useFieldsComparator(User.class, "votes");
-    public static TestMatchers<Vote> VOTE_MATCHERS = TestMatchers.useFieldsComparator(Vote.class, "user", "dateTime");
     public static TestMatchers<VoteTO> VOTE_TO_MATCHERS = TestMatchers.useFieldsComparator(VoteTO.class, "dateTime");
 }

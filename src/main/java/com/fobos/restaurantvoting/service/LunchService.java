@@ -1,9 +1,6 @@
 package com.fobos.restaurantvoting.service;
 
-import com.fobos.restaurantvoting.domain.Dish;
-import com.fobos.restaurantvoting.domain.Lunch;
-import com.fobos.restaurantvoting.domain.Restaurant;
-import com.fobos.restaurantvoting.domain.Vote;
+import com.fobos.restaurantvoting.domain.*;
 import com.fobos.restaurantvoting.repositories.DishRepo;
 import com.fobos.restaurantvoting.repositories.LunchRepo;
 import com.fobos.restaurantvoting.repositories.RestaurantRepo;
@@ -14,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -44,7 +40,7 @@ public class LunchService {
     @Transactional
     public void addLunch(String name, List<Long> dishIds, long restaurantId) {
         Restaurant restaurant = restaurantRepo.findById(restaurantId).orElseThrow();
-        List<Dish> dishes = new ArrayList<>();
+        Set<Dish> dishes = new TreeSet<>(Comparator.comparing(NamedEntity::getName));
 
         for (Long id: dishIds){
             dishes.add(dishRepo.findById(id).orElseThrow());
