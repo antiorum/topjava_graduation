@@ -7,15 +7,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "votes")
-public class Vote extends BaseEntity{
+public class Vote extends BaseEntity {
     @Column(name = "DATE_TIME")
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

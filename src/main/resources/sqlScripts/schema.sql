@@ -21,14 +21,15 @@ CREATE TABLE dishes
     ID    INT          NOT NULL AUTO_INCREMENT,
     NAME  VARCHAR(255) NOT NULL,
     PRICE NUMBER       NOT NULL,
-    PRIMARY KEY (ID)
+    PRIMARY KEY (ID),
+    constraint dishes_unique_name_idx unique (NAME)
 );
 
 CREATE TABLE lunches
 (
-    ID            INT       NOT NULL AUTO_INCREMENT,
+    ID            INT  NOT NULL AUTO_INCREMENT,
     NAME          VARCHAR(255),
-    DATE          TIMESTAMP NOT NULL,
+    DATE          DATE NOT NULL,
     RESTAURANT_ID INT,
     PRIMARY KEY (ID),
     constraint lunches_unique_restaurant_date unique (DATE, RESTAURANT_ID)
@@ -40,6 +41,8 @@ CREATE TABLE restaurants
     NAME    VARCHAR(255),
     ADDRESS VARCHAR(255),
     PRIMARY KEY (ID),
+    constraint restaurants_unique_restaurant_name unique (NAME),
+    constraint restaurants_unique_restaurant_address unique (ADDRESS)
 );
 
 CREATE TABLE votes
@@ -63,14 +66,3 @@ CREATE TABLE lunches_dishes
     FOREIGN KEY (LUNCH_ID) REFERENCES lunches (ID),
     FOREIGN KEY (DISH_ID) REFERENCES dishes (ID)
 );
-
--- CREATE TABLE restaurants_lunches
--- (
---     RESTAURANT_ID INT NOT NULL,
---     LUNCH_ID      INT NOT NULL,
---     PRIMARY KEY (RESTAURANT_ID, LUNCH_ID),
---     CONSTRAINT FK_RESTAURANT_LUNCH_1 FOREIGN KEY (RESTAURANT_ID)
---         REFERENCES restaurants (ID),
---     CONSTRAINT FK_RESTAURANT_LUNCH_2 FOREIGN KEY (LUNCH_ID)
---         REFERENCES lunches (ID)
--- );

@@ -7,13 +7,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Set;
-import java.util.Set;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "dishes")
-public class Dish extends NamedEntity{
+public class Dish extends NamedEntity {
     @Column(name = "PRICE")
     private BigDecimal price;
 
@@ -33,7 +30,7 @@ public class Dish extends NamedEntity{
         this.lunches = lunches;
     }
 
-    public Dish(Long id,@NotBlank @Size(min = 2, max = 100) String name, BigDecimal price, Set<Lunch> lunches) {
+    public Dish(Long id, @NotBlank @Size(min = 2, max = 100) String name, BigDecimal price, Set<Lunch> lunches) {
         super(name, id);
         this.price = price;
         this.lunches = lunches;
@@ -54,7 +51,6 @@ public class Dish extends NamedEntity{
     public void setLunches(Set<Lunch> lunches) {
         this.lunches = lunches;
     }
-
 
 
     @Override

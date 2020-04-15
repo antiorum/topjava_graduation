@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="common_header(title)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}">Title</title>
+    <link rel="stylesheet" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+
+    <script src="/webjars/jquery/3.4.1/jquery.min.js" defer></script>
+    <script src="/webjars/popper.js" defer></script>
+    <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11" defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js" defer></script>
+
+    <script src="../../static/js/vue-script.js" th:src="@{js/vue-script.js}" defer></script>
+</head>
+<body>
+    <div th:fragment="top">
+        <div class="container-fluid background-blue align-items-center height-50">
+            <div class="row">
+                <div class="col-6">
+                    <a href="index.html" th:href="@{/}" class="justify-content-start nav-link non-block">На главную</a>
+                </div>
+                <div class="col">
+                    <p class="nav-link non-block">Вы вошли как: <span sec:authentication="name"></span></p>
+                </div>
+                <div class="col">
+                    <div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+                        <a href="login.html" th:href="login" class="text-at-end nav-link non-block">Войти</a>
+                        <a href="registration.html" th:href="registration" class="text-at-end nav-link non-block">Зарегистрироваться</a>
+                    </div>
+                    <div sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')">
+                        <a href="#" th:href="@{/logout}" class="justify-content-end nav-link text-at-end non-block">Выйти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:fragment="topForLoginLogout">
+        <div class="container-fluid background-blue height-50">
+            <div class="row">
+                <div class="col-6">
+                    <a href="index.html" th:href="@{/}" class="justify-content-start nav-link non-block">На главную</a>
+                </div>
+        </div>
+    </div>
+</body>
+</html>

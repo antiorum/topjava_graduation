@@ -1,4 +1,4 @@
-package com.fobos.restaurantvoting.contoller.vote;
+package com.fobos.restaurantvoting.contoller;
 
 import com.fobos.restaurantvoting.AbstractControllerTest;
 import com.fobos.restaurantvoting.service.VotingService;
@@ -66,7 +66,7 @@ class VoteControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        ResultActions resultActions = mvc.perform(get(url + "/getMyVotes").contentType(MediaType.APPLICATION_JSON))
+        ResultActions resultActions = mvc.perform(get(url + "/MyVotes").contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
 
@@ -101,7 +101,7 @@ class VoteControllerTest extends AbstractControllerTest {
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
     void getByRestaurant() throws Exception {
-        ResultActions resultActions = mvc.perform(get(url + "/getByRestaurantId?restaurantId=1").contentType(MediaType.APPLICATION_JSON))
+        ResultActions resultActions = mvc.perform(get(url + "/ByRestaurantId?restaurantId=1").contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
 
@@ -111,7 +111,7 @@ class VoteControllerTest extends AbstractControllerTest {
     @Test
     @WithMockUser(authorities = "ROLE_USER")
     void getByUser() throws Exception {
-        ResultActions resultActions = mvc.perform(get(url + "/getMyVotes").contentType(MediaType.APPLICATION_JSON))
+        ResultActions resultActions = mvc.perform(get(url + "/MyVotes").contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
 

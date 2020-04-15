@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 
@@ -21,5 +22,7 @@ public interface DishRepo extends JpaRepository<Dish, Long> {
     @Modifying
     @Transactional
     @Query("update Dish d set d.name=?1, d.price=?2 where id=?3")
-    void update (String name, BigDecimal price, Long id);
+    void update(String name, BigDecimal price, Long id);
+
+    Set<Dish> findAllByIdIn(Long... ids);
 }

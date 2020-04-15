@@ -1,4 +1,4 @@
-package com.fobos.restaurantvoting.contoller.lunch;
+package com.fobos.restaurantvoting.contoller;
 
 import com.fobos.restaurantvoting.AbstractControllerTest;
 import com.fobos.restaurantvoting.domain.Lunch;
@@ -54,6 +54,7 @@ class LunchControllerTest extends AbstractControllerTest {
     @Test
     @WithMockUser(authorities = "ROLE_ADMIN")
     void add() throws Exception {
+        deleteById();
         mvc.perform(post(url)
                 .param("name", "pizza").param("dishesIds", "3").param("restaurantId", "1"))
                 .andDo(print())
@@ -64,6 +65,21 @@ class LunchControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk());
 
         LUNCH_MATCHERS.assertMatch(LUNCH3, readFromJson(resultActions, Lunch.class));
+    }
+
+    @Test
+    @WithMockUser(authorities = "ROLE_ADMIN")
+    void update() throws Exception {
+        mvc.perform(post(url)
+                .param("id", "1").param("name", "pizza").param("dishesIds", "3").param("restaurantId", "1"))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        ResultActions resultActions = mvc.perform(get(url + "/1"))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        LUNCH_MATCHERS.assertMatch(LUNCH4, readFromJson(resultActions, Lunch.class));
     }
 
     @Test

@@ -11,14 +11,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Comparator;
 import java.util.Set;
-
-import static javax.persistence.GenerationType.IDENTITY;
+import java.util.TreeSet;
 
 @Entity
-@Table(name = "lunches", uniqueConstraints = {@UniqueConstraint(columnNames = {"DATE", "RESTAURANT_ID" }, name = "lunches_unique_restaurant_date")})
-public class Lunch extends NamedEntity{
+@Table(name = "lunches", uniqueConstraints = {@UniqueConstraint(columnNames = {"DATE", "RESTAURANT_ID"}, name = "lunches_unique_restaurant_date")})
+public class Lunch extends NamedEntity {
     @Column(name = "DATE")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull

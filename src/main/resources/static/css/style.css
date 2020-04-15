@@ -1,0 +1,48 @@
+.non-block{
+    display: inline;
+}
+
+.bordered {
+    border: solid 1px black;
+}
+
+.padded {
+    padding: 20px;
+}
+
+.top-bottom-margin {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.mrgin {
+    margin: 10px;
+}
+
+.centred {
+    text-align: center;
+}
+
+.text-at-end {
+    text-align: end;
+}
+
+.centred-elements {
+    align-items: center;
+}
+
+.background-blue{
+    background-color: #95d6ff;
+}
+
+.height-50{
+    height: 50px;
+}
+
+h3 {
+    text-align: center;
+}
+
+a {
+    color: white;
+}

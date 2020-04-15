@@ -16,7 +16,7 @@ public class VoteTO extends BaseTO {
         this.restaurantName = restaurantName;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 

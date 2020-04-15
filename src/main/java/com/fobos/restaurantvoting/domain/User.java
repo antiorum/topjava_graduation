@@ -10,11 +10,9 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Set;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "NAME", name = "users_unique_name_idx")})
-public class User extends NamedEntity implements UserDetails{
+public class User extends NamedEntity implements UserDetails {
     @Column(name = "password")
     private String password;
 

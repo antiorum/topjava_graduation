@@ -13,7 +13,7 @@ public class RestaurantTO extends BaseTO {
         this.address = address;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 

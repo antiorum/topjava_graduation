@@ -33,7 +33,5 @@ public class AbstractControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
-
-
     }
 }

@@ -58,7 +58,7 @@ public class VotingService {
     private Vote getByDateAndUserId(LocalDate date, Long id) {
         LocalDateTime start = LocalDateTime.of(date, LocalTime.MIN);
         LocalDateTime end = LocalDateTime.of(date, LocalTime.MAX);
-        return voteRepo.findByDateTimeBetweenAndUser_Id(start, end,id);
+        return voteRepo.findByDateTimeBetweenAndUser_Id(start, end, id);
     }
 
     public List<VoteTO> getByRestaurantId(long id) {

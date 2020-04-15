@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: common_header(~{::title})">
+    <title>Admin Panel</title>
+</head>
+<body>
+<div th:replace="fragments/header :: top">
+</div>
+<h2 class="centred">Управление системой голосования</h2>
+<br>
+<div class="padded" id="admin_panel">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col bordered">
+                <h3>Управление пользователями</h3>
+                <table class="table">
+                    <tr>
+                        <th>ИД</th>
+                        <th>Имя</th>
+                        <th>Удаление</th>
+                    <tr :key="user.id" v-for="user in users">
+                        <th>{{user.id}}</th>
+                        <th>{{user.name}}</th>
+                        <th>
+                            <button @click="deleteUser($event)" class="btn btn-danger">Удалить</button>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <div class="col bordered">
+                <h3>Управление блюдами</h3>
+                <button class="btn btn-success top-bottom-margin centred-elements" data-target="#dishCreateModal" data-toggle="modal" type="button">
+                    Создать блюдо
+                </button>
+                <table class="table">
+                    <tr>
+                        <th hidden>ID</th>
+                        <th>Название</th>
+                        <th>Цена, $</th>
+                        <th>Удалить</th>
+                        <th>Редактировать</th>
+                    </tr>
+                    <tr :key="dish.id" v-for="dish in dishes">
+                        <th hidden>{{dish.id}}</th>
+                        <th>{{dish.name}}</th>
+                        <th>{{dish.price}}</th>
+                        <th>
+                            <button @click="deleteDish($event)" class="btn btn-danger">Удалить блюдо</button>
+                        </th>
+                        <th>
+                            <button @click="openDishUpdate($event)" class="btn btn-primary">Редактировать</button>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <div class="col bordered">
+                <h3>Управление обедами</h3>
+                <table class="table">
+                    <tr>
+                        <th hidden>ID</th>
+                        <th>Название ресторана</th>
+                        <th>Адрес</th>
+                        <th>Ланч на сегодня</th>
+                        <th>Управление</th>
+                    </tr>
+                    <tr :key="restaurant.id" v-for="restaurant in restaurants">
+                        <th hidden>{{restaurant.id}}</th>
+                        <th>{{restaurant.name}}</th>
+                        <th>{{restaurant.address}}</th>
+                        <th>{{ restaurant.lunches.length>0 ? restaurant.lunches[0].name : 'Несформирован!' }}
+                            <p hidden v-if="restaurant.lunches.length>0">{{restaurant.lunches[0].id}}</p>
+                            <ul v-if="restaurant.lunches.length>0">В этот обед входят следующие блюда:
+                                <li v-for="dish of restaurant.lunches[0].dishes">{{dish.name}} стоимостью {{dish.price}} $</li>
+                            </ul>
+                        </th>
+                        <th>
+                            <button @click="deleteLunch($event)" class="btn btn-danger" v-if="restaurant.lunches.length>0">Удалить</button>
+<!--                            <button @click="updateLunch($event)" class="btn btn-primary" v-if="restaurant.lunches.length>0">Редактировать</button>-->
+                            <button @click="openLunchCreate($event)" class="btn btn-success" v-if="restaurant.lunches.length==0">Добавить обед</button>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Create Dish Modal -->
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="dishCreateModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="CreateModalLabel">Добавление нового блюда</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Введите название нового блюда: <input id="newDishName" name="Название" type="text">
+                    Введите цену этого блюда: <input id="newDishPrice" name="Цена" type="number">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Закрыть</button>
+                    <button @click="createDish($event)" class="btn btn-primary">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Update Dish Modal -->
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="dishUpdateModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="UpdateModalLabel">Редактирование блюда</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input hidden disabled type="number" id="updateDishId">
+                    Отредактируйте название блюда: <input id="updateDishName" name="Название" type="text">
+                    Отредактируйте цену блюда: <input id="updateDishPrice" name="Цена" type="number" step="0.01">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Закрыть</button>
+                    <button @click="updateDish($event)" class="btn btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Create Lunch Modal -->
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="lunchCreateModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="CreateLunchModalLabel">Добавление нового обеда</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p hidden id="createLunchRestaurantId"></p>
+                    Вы собираетесь добавить обед дня в ресторан: <p id="createLunchRestaurantName"></p> по адресу: <p id="createLunchRestaurantAddress"></p>
+                    <br>
+                    Введите название обеда: <input class="top-bottom-margin" id="newLunchName" name="Название" type="text">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <table class="table">
+                                    <tr>
+                                        <th hidden>ID</th>
+                                        <th>Название</th>
+                                        <th>Цена, $</th>
+                                        <th>Добавить в обед</th>
+                                    </tr>
+                                    <tr :key="dish.id" v-for="dish in dishes">
+                                        <th hidden>{{dish.id}}</th>
+                                        <th>{{dish.name}}</th>
+                                        <th>{{dish.price}}</th>
+                                        <th>
+                                            <button @click="addDishToLunch($event)" class="btn btn-success">Добавить к обеду</button>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col">
+                                <table class="table" id="tableCreatingLunch">
+                                    <tr>
+                                        <th hidden>ID</th>
+                                        <th>Название</th>
+                                        <th>Цена, $</th>
+                                        <th>Добавить в обед</th>
+                                    </tr>
+                                    <tr :key="dish.id" v-for="dish in dishesForCreateLunch">
+                                        <th hidden>{{dish.id}}</th>
+                                        <th>{{dish.name}}</th>
+                                        <th>{{dish.price}}</th>
+                                        <th>
+                                            <button @click="deleteFromDishesToLunch($event)" class="btn btn-danger">Удалить</button>
+                                        </th>
+                                    </tr>
+                                </table>
+                                <button @click="clearDishesForCreateLunch" class="btn btn-danger" v-if="dishesForCreateLunch.length>0">Очистить</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Закрыть</button>
+                    <button @click="createLunch($event)" class="btn btn-primary">Создать обед</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

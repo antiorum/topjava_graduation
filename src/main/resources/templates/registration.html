@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Registration</title>
+<head th:replace="fragments/header :: common_header(~{::title})">
+    <title>Регистрация</title>
 </head>
 <body>
-Add a new user
+<div th:replace="fragments/header :: topForLoginLogout">
+</div>
 <p th:if="${loginError}" class="error">User with this name already exists</p>
-<form th:action="@{/registration}" method="post">
-    <div><label> User Name : <input type="text" name="name"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Register"/></div>
-</form>
+<div class="container">
+    <h2>Регистрация</h2>
+    <form th:action="@{/registration}" method="post">
+        <div><label> Введите имя пользователя : <input type="text" name="name"/> </label></div>
+        <div><label> Введите пароль: <input type="password" name="password"/> </label></div>
+        <div><input type="submit" value="Регистрация" class="btn btn-info"/></div>
+    </form>
+</div>
 </body>
 </html>

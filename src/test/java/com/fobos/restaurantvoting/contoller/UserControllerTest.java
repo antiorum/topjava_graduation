@@ -1,4 +1,4 @@
-package com.fobos.restaurantvoting.contoller.user;
+package com.fobos.restaurantvoting.contoller;
 
 import com.fobos.restaurantvoting.AbstractControllerTest;
 import com.fobos.restaurantvoting.domain.User;

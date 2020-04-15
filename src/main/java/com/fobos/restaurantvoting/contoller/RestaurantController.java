@@ -1,4 +1,4 @@
-package com.fobos.restaurantvoting.contoller.restaurant;
+package com.fobos.restaurantvoting.contoller;
 
 import com.fobos.restaurantvoting.domain.Restaurant;
 import com.fobos.restaurantvoting.service.RestaurantService;
@@ -24,7 +24,7 @@ public class RestaurantController {
     }
 
     @GetMapping
-    public List<Restaurant> getAllWithTodayLunch(){
+    public List<Restaurant> getAllWithTodayLunch() {
         return restaurantService.getAllWithTodayLunch();
     }
 

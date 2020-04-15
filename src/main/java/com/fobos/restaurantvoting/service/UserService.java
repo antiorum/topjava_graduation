@@ -1,15 +1,17 @@
 package com.fobos.restaurantvoting.service;
 
+import com.fobos.restaurantvoting.domain.Role;
 import com.fobos.restaurantvoting.domain.User;
 import com.fobos.restaurantvoting.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -17,6 +19,9 @@ import java.util.List;
 public class UserService implements UserDetailsService {
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -33,6 +38,9 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void save(User user) {
+        user.setEnabled(true);
+        user.setRoles(Collections.singleton(Role.ROLE_USER));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
     }
 
